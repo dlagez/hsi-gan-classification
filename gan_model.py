@@ -426,7 +426,7 @@ def test(net, img, hyperparams):
 
             indices = [b[1:] for b in batch]
             data = data.to(device)
-            output = net(data)
+            real_pred, output = net(data)
             if isinstance(output, tuple):
                 output = output[0]
             output = output.to("cpu")
@@ -452,7 +452,7 @@ def val(net, data_loader, device="cpu", supervision="full"):
             # Load the data into the GPU if required
             data, target = data.to(device), target.to(device)
             if supervision == "full":
-                output = net(data)
+                real_pred, output = net(data)
             elif supervision == "semi":
                 outs = net(data)
                 output, rec = outs
